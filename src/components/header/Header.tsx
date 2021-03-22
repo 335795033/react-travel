@@ -4,12 +4,30 @@ import logo from '../../assets/logo.svg'
 import { Layout, Typography, Input, Menu, Button, Dropdown } from 'antd'
 import { GlobalOutlined } from '@ant-design/icons';
 import { useHistory, useLocation, useParams, useRouteMatch } from 'react-router-dom'
+import { useSelector } from '../../redux/hooks'
+import { useDispatch } from 'react-redux'
+// import { Dispatch } from 'redux'
+import { LanguageActionsTypes, addLanguageActionCreator,chengeLangugaeActionCreator } from '../../redux/language/languageActions'
+// import { RootState } from '../../redux/store'
 
 export const Header: React.FC = () => {
   const history = useHistory() //导航操作
   const location = useLocation() //当前路径的信息
   const params = useParams() //路径匹配的数据
   const match = useRouteMatch() //url的参数
+  const language = useSelector((state) => state.language) //获得store中的state数据
+  const languageList = useSelector((state) => state.languageList)
+  const dispatch = useDispatch()
+
+  const menuClickHandler = (e) => {
+    if (e.key === 'new') {
+      //处理新语言添加action
+      dispatch(addLanguageActionCreator('新语言', 'new_lang'))
+    } else {
+      dispatch(chengeLangugaeActionCreator(e.key))
+    }
+  };
+
   return (
     <div className={styles['app-header']}>
       {/*top-header */}
@@ -19,14 +37,16 @@ export const Header: React.FC = () => {
           <Dropdown.Button
             style={{ marginLeft: 15 }}
             overlay={
-              <Menu>
-                <Menu.Item>中文</Menu.Item>
-                <Menu.Item>English</Menu.Item>
+              <Menu onClick={menuClickHandler}>
+                {languageList.map(l => {
+                  return <Menu.Item key={l.code}>{l.name}</Menu.Item>
+                })}
+                <Menu.Item key={'new'}>添加新语言</Menu.Item>
               </Menu>
             }
             icon={<GlobalOutlined></GlobalOutlined>}
           >
-            语言
+            {language === 'zh' ? '中文' : 'English'}
           </Dropdown.Button>
           <Button.Group className={styles['button-group']}>
             <Button onClick={() => history.push('register')}>注册</Button>
