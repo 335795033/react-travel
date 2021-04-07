@@ -1,5 +1,11 @@
-import React from 'react'
+import React from "react";
+import { UserLayout } from '../../layouts/userLayout'
+import { SingInForm } from './signInForm'
 
-export const SignInPage : React.FC = (props) => {
-  return <h1>登录页面</h1>
+export const SignInPage: React.FC = () => {
+  return (
+    <UserLayout>
+    <SingInForm />
+  </UserLayout>
+  )
 }

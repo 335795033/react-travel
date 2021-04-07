@@ -15,8 +15,8 @@ export const Header: React.FC = () => {
   const location = useLocation() //当前路径的信息
   const params = useParams() //路径匹配的数据
   const match = useRouteMatch() //url的参数
-  const language = useSelector((state) => state.language) //获得store中的state数据
-  const languageList = useSelector((state) => state.languageList)
+  const language = useSelector((state) => state.language.language) //获得store中的state数据
+  const languageList = useSelector((state) => state.language.languageList)
   const dispatch = useDispatch()
 
   const menuClickHandler = (e) => {
@@ -49,8 +49,8 @@ export const Header: React.FC = () => {
             {language === 'zh' ? '中文' : 'English'}
           </Dropdown.Button>
           <Button.Group className={styles['button-group']}>
-            <Button onClick={() => history.push('register')}>注册</Button>
-            <Button onClick={() => history.push('signIn')}>登录</Button>
+            <Button onClick={() => history.push('/register')}>注册</Button>
+            <Button onClick={() => history.push('/signIn')}>登录</Button>
           </Button.Group>
         </div>
       </div>
@@ -59,7 +59,7 @@ export const Header: React.FC = () => {
           <img src={logo} alt="logo" className={styles['App-logo']} />
           <Typography.Title level={3} className={styles.title}>React 旅游网</Typography.Title>
         </span>
-        <Input.Search placeholder="请输入旅游目的地、主题、或关键字" className={styles['search-input']}></Input.Search>
+        <Input.Search onSearch={(keywords)=>history.push('/search/'+ keywords)} placeholder="请输入旅游目的地、主题、或关键字" className={styles['search-input']}></Input.Search>
       </Layout.Header>
       <Menu mode={'horizontal'} className={styles['main-menu']}>
         <Menu.Item key={1}>旅游首页</Menu.Item>
