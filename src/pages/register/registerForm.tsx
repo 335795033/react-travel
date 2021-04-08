@@ -1,4 +1,4 @@
-import { Form, Input, Button, Checkbox } from 'antd';
+import { Form, Input, Button, Checkbox,message } from 'antd';
 import styles from './registerForm.module.css'
 import axios from 'axios'
 import { useHistory } from 'react-router-dom'
@@ -21,16 +21,18 @@ const tailLayout = {
 export const RegisterForm = () => {
   const history = useHistory()
   const onFinish = async (values) => {
-    console.log('Success:', values);
+    // console.log('Success:', values);
     try {
+      message.loading({ content: '加载中...', key:'register'});
       await axios.post('http://123.56.149.216:8080/auth/register', {
         email: values.username,
         password: values.password,
         confirmPassword: values.confirm
       })
+      message.success({ content: '注册成功!', key:'register', duration: 2 });
       history.push('/signIn');
     } catch (error) {
-      alert('注册失败')
+      message.error({ content: '注册失败', key:'register', duration: 2 });
     }
   };
 

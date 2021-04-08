@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import styles from './Header.module.css'
 import logo from '../../assets/logo.svg'
 import { Layout, Typography, Input, Menu, Button, Dropdown } from 'antd'
@@ -6,9 +6,15 @@ import { GlobalOutlined } from '@ant-design/icons';
 import { useHistory, useLocation, useParams, useRouteMatch } from 'react-router-dom'
 import { useSelector } from '../../redux/hooks'
 import { useDispatch } from 'react-redux'
+import jwt_decode, { JwtPayload as DefaultJwtPayload } from 'jwt-decode'
+import { LanguageActionsTypes, addLanguageActionCreator, chengeLangugaeActionCreator } from '../../redux/language/languageActions'
+import { userlSlice } from '../../redux/user/slice';
 // import { Dispatch } from 'redux'
-import { LanguageActionsTypes, addLanguageActionCreator,chengeLangugaeActionCreator } from '../../redux/language/languageActions'
 // import { RootState } from '../../redux/store'
+
+interface JwtPayload extends DefaultJwtPayload {
+  username: string
+}
 
 export const Header: React.FC = () => {
   const history = useHistory() //导航操作
@@ -19,6 +25,20 @@ export const Header: React.FC = () => {
   const languageList = useSelector((state) => state.language.languageList)
   const dispatch = useDispatch()
 
+  const jwt = useSelector(s => s.user.token)
+  const [username, setUsername] = useState('')
+
+  const shoppingCartItems = useSelector(s=>s.shoppingCart.items)
+  const shoppingCartLoading = useSelector(s=> s.shoppingCart.loading)
+
+
+  useEffect(() => {
+    if (jwt) {
+      const token = jwt_decode<JwtPayload>(jwt) // 解码
+      setUsername(token.username)
+    }
+  }, [jwt])
+
   const menuClickHandler = (e) => {
     if (e.key === 'new') {
       //处理新语言添加action
@@ -27,6 +47,12 @@ export const Header: React.FC = () => {
       dispatch(chengeLangugaeActionCreator(e.key))
     }
   };
+
+  const onLogout = () => {
+    dispatch(userlSlice.actions.logOut())
+    history.push('/')
+    // window.location.reload(false)
+  }
 
   return (
     <div className={styles['app-header']}>
@@ -48,10 +74,19 @@ export const Header: React.FC = () => {
           >
             {language === 'zh' ? '中文' : 'English'}
           </Dropdown.Button>
-          <Button.Group className={styles['button-group']}>
-            <Button onClick={() => history.push('/register')}>注册</Button>
-            <Button onClick={() => history.push('/signIn')}>登录</Button>
-          </Button.Group>
+          {jwt ?
+            <Button.Group className={styles['button-group']}>
+              <span>欢迎
+                <Typography.Text>{username}</Typography.Text>
+              </span>
+              <Button loading={shoppingCartLoading} onClick={()=>history.push('/shoppingCart')}>购物车({shoppingCartItems.length})</Button>
+              <Button onClick={onLogout}>注销</Button>
+            </Button.Group>
+            : <Button.Group className={styles['button-group']}>
+              <Button onClick={() => history.push('/register')}>注册</Button>
+              <Button onClick={() => history.push('/signIn')}>登录</Button>
+            </Button.Group>
+          }
         </div>
       </div>
       <Layout.Header className={styles['main-header']}>
@@ -59,7 +94,7 @@ export const Header: React.FC = () => {
           <img src={logo} alt="logo" className={styles['App-logo']} />
           <Typography.Title level={3} className={styles.title}>React 旅游网</Typography.Title>
         </span>
-        <Input.Search onSearch={(keywords)=>history.push('/search/'+ keywords)} placeholder="请输入旅游目的地、主题、或关键字" className={styles['search-input']}></Input.Search>
+        <Input.Search onSearch={(keywords) => history.push('/search/' + keywords)} placeholder="请输入旅游目的地、主题、或关键字" className={styles['search-input']}></Input.Search>
       </Layout.Header>
       <Menu mode={'horizontal'} className={styles['main-menu']}>
         <Menu.Item key={1}>旅游首页</Menu.Item>

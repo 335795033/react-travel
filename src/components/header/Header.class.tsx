@@ -92,8 +92,8 @@ class HeaderComponnet extends React.Component<PropsType>{
               {this.props.language === 'zh' ? '中文' : 'English'}
             </Dropdown.Button>
             <Button.Group className={styles['button-group']}>
-              <Button onClick={() => history.push('register')}>注册</Button>
-              <Button onClick={() => history.push('signIn')}>登录</Button>
+              <Button onClick={() => history.push('/register')}>注册</Button>
+              <Button onClick={() => history.push('/signIn')}>登录</Button>
             </Button.Group>
           </div>
         </div>
