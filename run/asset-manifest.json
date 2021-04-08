@@ -1,0 +1,30 @@
+{
+  "files": {
+    "main.css": "/static/css/main.8043b264.chunk.css",
+    "main.js": "/static/js/main.eb1d6a4b.chunk.js",
+    "main.js.map": "/static/js/main.eb1d6a4b.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.bb41a3f2.js",
+    "runtime-main.js.map": "/static/js/runtime-main.bb41a3f2.js.map",
+    "static/css/2.2396ab67.chunk.css": "/static/css/2.2396ab67.chunk.css",
+    "static/js/2.526241d2.chunk.js": "/static/js/2.526241d2.chunk.js",
+    "static/js/2.526241d2.chunk.js.map": "/static/js/2.526241d2.chunk.js.map",
+    "index.html": "/index.html",
+    "static/css/2.2396ab67.chunk.css.map": "/static/css/2.2396ab67.chunk.css.map",
+    "static/css/main.8043b264.chunk.css.map": "/static/css/main.8043b264.chunk.css.map",
+    "static/js/2.526241d2.chunk.js.LICENSE.txt": "/static/js/2.526241d2.chunk.js.LICENSE.txt",
+    "static/media/carousel_1.8a3dd591.jpg": "/static/media/carousel_1.8a3dd591.jpg",
+    "static/media/carousel_2.b79314aa.jpg": "/static/media/carousel_2.b79314aa.jpg",
+    "static/media/carousel_3.39c09c71.jpg": "/static/media/carousel_3.39c09c71.jpg",
+    "static/media/logo.6ce24c58.svg": "/static/media/logo.6ce24c58.svg",
+    "static/media/sider_2019_02-04-2.e8593237.png": "/static/media/sider_2019_02-04-2.e8593237.png",
+    "static/media/sider_2019_02-04.600e70c8.png": "/static/media/sider_2019_02-04.600e70c8.png",
+    "static/media/sider_2019_12-09.d016ce66.png": "/static/media/sider_2019_12-09.d016ce66.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.bb41a3f2.js",
+    "static/css/2.2396ab67.chunk.css",
+    "static/js/2.526241d2.chunk.js",
+    "static/css/main.8043b264.chunk.css",
+    "static/js/main.eb1d6a4b.chunk.js"
+  ]
+}
